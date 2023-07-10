@@ -5,4 +5,4 @@ const index = (reg, res) => {
 };
 module.exports = {
     index
-};
+}
