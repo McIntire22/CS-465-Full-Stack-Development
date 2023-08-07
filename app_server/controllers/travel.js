@@ -3,7 +3,7 @@ const apiOptions = {
     server: 'http://localhost:3000'
 }
 
-// Render travel list view
+/* Render travel list view */ 
 const renderTravelList = (req, res, responseBody) => {
     let message = null;
     let pageTitle = process.env.npm_package_description + ' - Travel';
@@ -13,7 +13,7 @@ const renderTravelList = (req, res, responseBody) => {
         responseBody = [];
     } else {
         if (!responseBody.length) {
-            message = "No trips exist in database!";
+            message = 'No trips exist in database!';
         }
     }
 
@@ -22,12 +22,9 @@ const renderTravelList = (req, res, responseBody) => {
         trips: responseBody,
         message
     });
-
 };
 
-
-
-// Get travel list
+/* GET travel list view */
 const travelList = (req, res) => {
     const path = '/api/trips';
     const requestOptions = {
@@ -35,20 +32,20 @@ const travelList = (req, res) => {
         method: 'GET',
         json: {},
     };
-    console.info('>> travelController.travelList calling ' +
-        requestOptions.url);
-    
+
+    console.info('>> travelController.travelList calling ' + requestOptions.url);
+
     request(
         requestOptions,
-        (err, {statusCode}, body) => {
-            if(err) {
+        (err, { statusCode }, body) => {
+            if (err) {
                 console.error(err);
             }
             renderTravelList(req, res, body);
         }
-    );
-};
+    )
+}
 
 module.exports = {
     travelList
-}
+};
