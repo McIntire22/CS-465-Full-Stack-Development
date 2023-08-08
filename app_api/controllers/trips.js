@@ -28,6 +28,7 @@ const tripsFindCode = async (req, res) => {
 
 const tripsUpdateTrip = async (req, res) => {
   console.log(req.body);
+  getUser(req, res, (req, res) => {
   Model.findOneAndUpdate(
     { code: req.params.tripCode },
     {
@@ -60,33 +61,37 @@ const tripsUpdateTrip = async (req, res) => {
         .status(500) // server error
         .json(err);
     });
+});
 };
 
 const tripsAddTrip = async (req, res) => {
-  Model.create(
-    {
-      code: req.body.code,
-      name: req.body.name,
-      length: req.body.length,
-      start: req.body.start,
-      resort: req.body.resort,
-      perPerson: req.body.perPerson,
-      image: req.body.image,
-      description: req.body.description,
-    },
-    (err, trip) => {
-      if (err) {
-        return res
-          .status(400) //bad request
-          .json(err);
-      } else {
-        return res
-          .status(201) //creates
-          .json(trip);
-      }
-    }
+  getUser(req, res,
+  (req, res) => {
+  Trip
+  .create({
+  code: req.body.code,
+ name: req.body.name,
+ length: req.body.length,
+ start: req.body.start,
+ resort: req.body.resort,
+ perPerson: req.body.perPerson,
+ image: req.body.image,
+ description: req.body.description
+  },
+  (err, trip) => {
+  if (err) {
+  return res
+  .status(400) // bad request
+ .json(err);
+  } else {
+  return res
+  .status(201) // created
+ .json(trip);
+  }
+  });
+  }
   );
-};
+ }
 
 module.exports = {
   tripsList,
